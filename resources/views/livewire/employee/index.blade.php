@@ -9,7 +9,7 @@
                         <select wire:model.live="selectedUnit" class="form-select rounded-lg shadow-sm mt-1 block border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                             <option value="">Semua Unit</option>
                             @foreach($units as $unit)
-                                <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -33,23 +33,23 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($employees as $employee)
-                                <tr class="hover:bg-gray-100">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        @if($employee->photo)
-                                            <img src="{{ Storage::url($employee->photo) }}" class="h-10 w-10 rounded-full shadow">
-                                        @else
-                                            <div class="h-10 w-10 rounded-full bg-gray-200"></div>
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $employee->nip }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $employee->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $employee->jabatan->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $employee->units->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right">
-                                        <button wire:click="edit({{ $employee->id }})" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</button>
-                                        <button wire:click="$dispatch('confirm-delete', { id: {{ $employee->id }} })" class="text-red-600 hover:text-red-800 font-medium">Hapus</button>
-                                    </td>
-                                </tr>
+                            <tr class="hover:bg-gray-100">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($employee->photo)
+                                    <img src="{{ Storage::url($employee->photo) }}" class="h-10 w-10 rounded-full shadow">
+                                    @else
+                                    <div class="h-10 w-10 rounded-full bg-gray-200"></div>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $employee->nip }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $employee->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $employee->departement->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $employee->units->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right">
+                                    <button wire:click="edit({{ $employee->id }})" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</button>
+                                    <button wire:click="$dispatch('confirm-delete', { id: {{ $employee->id }} })" class="text-red-600 hover:text-red-800 font-medium">Hapus</button>
+                                </td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -88,11 +88,11 @@
 
                         <!-- Jabatan -->
                         <div class="mb-4">
-                            <label for="jabatan_id" class="block text-gray-700 font-bold">Departemen</label>
-                            <select wire:model="jabatan_id" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-200 w-full mt-1">
-                                <option value="">Pilih Departemen</option>
+                            <label for="departement_id" class="block text-gray-700 font-bold">Jabatan</label>
+                            <select wire:model="departement_id" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-200 w-full mt-1">
+                                <option value="">Pilih Jabatan</option>
                                 @foreach($departments as $department)
-                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                <option value="{{ $department->id }}">{{ $department->name }}</option>
                                 @endforeach
                             </select>
                             @error('departement_id') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -104,19 +104,19 @@
                             <select wire:model="eselon_id" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-200 w-full mt-1">
                                 <option value="">Pilih Eselon</option>
                                 @foreach($eselons as $eselon)
-                                    <option value="{{ $eselon->id }}">{{ $eselon->name }}</option>
+                                <option value="{{ $eselon->id }}">{{ $eselon->name }}</option>
                                 @endforeach
                             </select>
                             @error('eselon_id') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
 
-                        <!-- Rank -->
+                        <!-- Golongan -->
                         <div class="mb-4">
-                            <label for="rank_id" class="block text-gray-700 font-bold">Pangkat</label>
-                            <select wire:model="rank_id" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-200 w-full mt-1">
-                                <option value="">Pilih Pangkat</option>
+                            <label for="group_id" class="block text-gray-700 font-bold">Golongan</label>
+                            <select wire:model="group_id" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-200 w-full mt-1">
+                                <option value="">Pilih Golongan</option>
                                 @foreach($groups as $group)
-                                    <option value="{{ $rank->id }}">{{ $rank->name }}</option>
+                                <option value="{{ $group->id }}">{{ $group->name }}</option>
                                 @endforeach
                             </select>
                             @error('group_id') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -124,11 +124,11 @@
 
                         <!-- Unit -->
                         <div class="mb-4">
-                            <label for="unit_id" class="block text-gray-700 font-bold">Unit</label>
+                            <label for="unit_id" class="block text-gray-700 font-bold">Unit Kerja</label>
                             <select wire:model="unit_id" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-200 w-full mt-1">
-                                <option value="">Pilih Unit</option>
+                                <option value="">Pilih Unit Kerja</option>
                                 @foreach($units as $unit)
-                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                 @endforeach
                             </select>
                             @error('unit_id') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -140,7 +140,7 @@
                             <select wire:model="work_location_id" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-200 w-full mt-1">
                                 <option value="">Pilih Lokasi Kerja</option>
                                 @foreach($workLocations as $workLocation)
-                                    <option value="{{ $workLocation->id }}">{{ $workLocation->name }}</option>
+                                <option value="{{ $workLocation->id }}">{{ $workLocation->name }}</option>
                                 @endforeach
                             </select>
                             @error('work_location_id') <span class="text-red-500">{{ $message }}</span> @enderror

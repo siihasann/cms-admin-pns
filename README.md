@@ -1,66 +1,217 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CMS Pegawai - Laravel Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+CMS Pegawai adalah aplikasi berbasis web yang digunakan untuk mengelola data pegawai, unit, departemen, eselon, dan lokasi kerja. Aplikasi ini dibangun menggunakan Laravel dan Livewire untuk memberikan pengalaman yang dinamis dan interaktif.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Manajemen data pegawai
+- Pencarian dan filter pegawai berdasarkan nama, NIP, unit, dan departemen
+- Formulir untuk menambah dan mengedit data pegawai
+- Integrasi dengan tabel unit, departemen, eselon, dan lokasi kerja
+- Manajemen pengguna dan peran (role-based access control)
+- Export data pegawai ke format Excel dan PDF
+- Riwayat perubahan data pegawai (audit trail)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prasyarat
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Sebelum memulai, pastikan Anda memiliki beberapa perangkat lunak berikut yang terinstal:
 
-## Learning Laravel
+- PHP 8.x atau lebih tinggi
+- Composer
+- Laravel 9.x atau lebih tinggi
+- Node.js dan NPM
+- Database (PostgreSQL, MySQL, dll.)
+- Git
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalasi
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Clone Repository
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone https://github.com/siihasann/cms-admin-pns.git
+cd cms-pegawai
+```
 
-## Laravel Sponsors
+### 2. Instalasi Dependensi
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```bash
+# Install PHP dependencies
+composer install
 
-### Premium Partners
+# Install NPM packages
+npm install
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+# Compile assets
+npm run dev
+```
 
-## Contributing
+### 3. Konfigurasi Environment
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# Copy file environment
+cp .env.example .env
 
-## Code of Conduct
+# Generate application key
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Buka file `.env` dan sesuaikan konfigurasi database:
 
-## Security Vulnerabilities
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=cms_pegawai
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Migrasi dan Seeding Database
 
-## License
+```bash
+# Jalankan migrasi database
+php artisan migrate
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# (Opsional) Jalankan seeder untuk data awal
+php artisan db:seed
+```
+
+### 5. Storage Link
+
+```bash
+php artisan storage:link
+```
+
+### 6. Jalankan Aplikasi
+
+```bash
+# Start development server
+php artisan serve
+
+# Dalam terminal terpisah, jalankan Vite untuk development
+npm run dev
+```
+
+Aplikasi sekarang dapat diakses di `https://cms-admin-pns.vercel.app/`.
+
+## Struktur Database
+
+### Tabel Utama
+- `employees` - Data pegawai
+- `units` - Data unit kerja
+- `departments` - Data departemen
+- `positions` - Data jabatan
+- `locations` - Data lokasi kerja
+- `users` - Data pengguna sistem
+- `roles` - Data peran pengguna
+- `permissions` - Data izin akses
+
+## Penggunaan
+
+### Login dan Autentikasi
+
+1. Akses halaman login di `/login`
+2. Masukkan kredensial yang valid
+3. Sistem akan mengarahkan ke dashboard sesuai peran pengguna
+
+### Manajemen Pegawai
+
+#### Menambah Pegawai Baru
+1. Klik menu "Pegawai" > "Tambah Pegawai"
+2. Isi formulir data pegawai
+3. Upload dokumen pendukung (jika ada)
+4. Klik "Simpan"
+
+#### Mencari dan Filter Pegawai
+1. Gunakan kotak pencarian untuk mencari berdasarkan nama atau NIP
+2. Gunakan filter dropdown untuk menyaring berdasarkan:
+   - Unit kerja
+   - Departemen
+   - Status kepegawaian
+   - Lokasi kerja
+
+#### Export Data
+1. Pilih pegawai yang akan diekspor atau pilih semua
+2. Klik tombol "Export"
+3. Pilih format yang diinginkan (Excel/PDF)
+
+## Teknologi yang Digunakan
+
+- **Backend Framework:** Laravel 9.x
+- **Frontend:** 
+  - Livewire 2.x
+  - Alpine.js
+  - Tailwind CSS
+- **Database:** PostgreSQL
+- **Authentication:** Laravel Sanctum
+- **File Storage:** Laravel Storage
+- **PDF Generation:** DomPDF
+- **Excel Export:** Laravel Excel
+- **Testing:** PHPUnit
+
+## Pengembangan
+
+### Coding Standards
+- Mengikuti PSR-12
+- Menggunakan Laravel Pint untuk formatting
+- Dokumentasi PHPDoc untuk fungsi-fungsi penting
+
+### Testing
+```bash
+# Menjalankan unit tests
+php artisan test
+
+# Menjalankan specific test
+php artisan test --filter=EmployeeTest
+```
+
+### Deployment
+1. Pull kode terbaru
+2. Install/update dependencies
+3. Jalankan migrasi
+4. Compile assets
+5. Clear cache
+
+```bash
+git pull origin main
+composer install --no-dev
+php artisan migrate --force
+npm install
+npm run build
+php artisan optimize
+```
+
+## Kontribusi
+
+1. Fork repository ini
+2. Buat branch baru (`git checkout -b fitur-baru`)
+3. Commit perubahan (`git commit -am 'Menambahkan fitur baru'`)
+4. Push ke branch (`git push origin fitur-baru`)
+5. Buat Pull Request
+
+### Guidelines
+- Tulis deskripsi yang jelas untuk pull request
+- Pastikan semua test passed
+- Update dokumentasi jika diperlukan
+- Ikuti coding standards yang ada
+
+## Troubleshooting
+
+### Masalah Umum
+
+1. **Permissions Error**
+```bash
+chmod -R 775 storage bootstrap/cache
+```
+
+2. **Composer Memory Limit**
+```bash
+COMPOSER_MEMORY_LIMIT=-1 composer install
+```
+
+3. **Database Connection**
+- Periksa kredensial di `.env`
+- Pastikan service database berjalan
+- Periksa firewall settings
+
+© 2024 CMS Pegawai. All rights reserved.
