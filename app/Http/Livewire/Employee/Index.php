@@ -4,11 +4,9 @@ namespace App\Http\Livewire\Employee;
 
 use App\Models\Departements;
 use App\Models\Employee;
-use App\Models\Employees;
 use App\Models\Eselons;
 use App\Models\Groups;
 use App\Models\Units;
-use App\Models\Work_Locations;
 use App\Models\WorkLocations;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -23,7 +21,7 @@ class Index extends Component
     public $search = '';
     public $selectedUnit = '';
     public $photo;
-    
+
     // Form fields
     public $employeeId;
     public $nip;
@@ -57,7 +55,7 @@ class Index extends Component
             'religion' => 'required|string',
             'phone' => 'nullable|string',
             'npwp' => 'nullable|string',
-            'photo' => 'nullable|image|max:1024',
+            'photo' => 'nullable|image|max:1024|mimes:jpg,jpeg,png',
             'departement_id' => 'required|exists:departements,id',
             'eselon_id' => 'required|exists:eselons,id',
             'unit_id' => 'required|exists:units,id',
@@ -74,7 +72,7 @@ class Index extends Component
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('name', 'like', '%' . $this->search . '%')
-                      ->orWhere('nip', 'like', '%' . $this->search . '%');
+                        ->orWhere('nip', 'like', '%' . $this->search . '%');
                 });
             })
             ->when($this->selectedUnit, function ($query) {
@@ -82,7 +80,7 @@ class Index extends Component
             });
 
         $employees = $query->paginate(10);
-        
+
         $units = Units::all();
         $departments = Departements::all();
         $eselons = Eselons::all();
@@ -126,24 +124,36 @@ class Index extends Component
             'work_location_id' => $this->work_location_id,
         ];
 
-        if ($this->photo) {
-            $path = $this->photo->store('photos', 'public');
-            $data['photo'] = $path;
-        }
+        try {
+            // Handle foto
+            if ($this->photo) {
+                // Jika sedang edit dan ada foto lama, hapus foto lama
+                if ($this->employeeId) {
+                    $employee = Employee::find($this->employeeId);
+                    if ($employee && $employee->photo) {
+                        Storage::disk('public')->delete($employee->photo);
+                    }
+                }
 
-        if ($this->employeeId) {
-            $employee = Employee::find($this->employeeId);
-            if ($this->photo && $employee->photo) {
-                Storage::disk('public')->delete($employee->photo);
+                // Simpan foto baru
+                $filename = time() . '_' . $this->photo->getClientOriginalName();
+                $path = $this->photo->storeAs('photos', $filename, 'public');
+                $data['photo'] = $path;
             }
-            $employee->update($data);
-        } else {
-            Employee::create($data);
-        }
 
-        $this->isModalOpen = false;
-        $this->resetInputFields();
-        session()->flash('message', $this->employeeId ? 'Employee updated successfully.' : 'Employee created successfully.');
+            // Simpan atau update data
+            if ($this->employeeId) {
+                Employee::find($this->employeeId)->update($data);
+            } else {
+                Employee::create($data);
+            }
+
+            $this->isModalOpen = false;
+            $this->resetInputFields();
+            session()->flash('message', $this->employeeId ? 'Employee updated successfully.' : 'Employee created successfully.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error: ' . $e->getMessage());
+        }
     }
 
     public function edit($id)

@@ -19,4 +19,6 @@ class Eselons extends Model
     }
 
     use HasFactory;
+
+    protected $guarded = [];
 }

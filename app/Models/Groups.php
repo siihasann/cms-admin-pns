@@ -17,4 +17,6 @@ class Groups extends Model
         return $this->hasMany(Employee::class);
     }
     use HasFactory;
+
+    protected $guarded = [];
 }

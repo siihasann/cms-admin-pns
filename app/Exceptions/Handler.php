@@ -47,4 +47,13 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \Illuminate\Database\QueryException && $exception->getCode() === "08006") {
+            return response()->json(['error' => 'Koneksi ke database tidak tersedia.'], 503);
+        }
+
+        return parent::render($request, $exception);
+    }
 }

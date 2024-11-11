@@ -18,4 +18,6 @@ class Units extends Model
     }
 
     use HasFactory;
+
+    protected $guarded = [];
 }

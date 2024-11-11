@@ -17,11 +17,12 @@ class Employee extends Model
         'address',
         'religion',
         'phone',
+        'photo',
         'npwp',
-        'jabatan_id',
+        'departement_id',
         'eselon_id',
         'unit_id',
-        'rank_id',
+        'group_id',
         'work_location_id',
     ];
 
@@ -31,7 +32,7 @@ class Employee extends Model
 
     public function jabatan(): BelongsTo
     {
-        return $this->belongsTo(Departements::class, 'jabatan_id');
+        return $this->belongsTo(Departements::class, 'departement_id');
     }
 
     public function eselon(): BelongsTo
@@ -41,7 +42,7 @@ class Employee extends Model
 
     public function ranks(): BelongsTo
     {
-        return $this->belongsTo(Groups::class, 'rank_id');
+        return $this->belongsTo(Groups::class, 'group_id');
     }
 
     public function units(): BelongsTo
@@ -54,4 +55,6 @@ class Employee extends Model
         return $this->belongsTo(WorkLocations::class, 'work_location_id');
     }
     use HasFactory;
+
+    protected $guarded = [];
 }
