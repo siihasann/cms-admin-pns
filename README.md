@@ -2,6 +2,9 @@
 
 CMS Pegawai adalah aplikasi berbasis web yang digunakan untuk mengelola data pegawai, unit, departemen, eselon, dan lokasi kerja. Aplikasi ini dibangun menggunakan Laravel dan Livewire untuk memberikan pengalaman yang dinamis dan interaktif.
 
+## Login : admin@gmail.com
+## Password : Hasan123
+
 ## Fitur Utama
 
 - Manajemen data pegawai
